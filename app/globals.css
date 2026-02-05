@@ -24,3 +24,101 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.invoice-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+.invoice-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-table thead {
+  background: #f4f6f8;
+}
+
+.invoice-table th {
+  text-align: left;
+  padding: 12px;
+  font-size: 13px;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+}
+
+.invoice-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.invoice-table tr:hover {
+  background: #fafafa;
+}
+
+.invoice-table input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.invoice-table input:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #f9fbff;
+}
+
+.invoice-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.add-row {
+  background: #e0e7ff;
+  color: #1e3a8a;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.add-row:hover {
+  background: #c7d2fe;
+}
+
+.generate-btn {
+  background: #2563eb;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.generate-btn:hover {
+  background: #1d4ed8;
+}
+
+.total-row td {
+  font-weight: bold;
+  background: #f8fafc;
+}
+
+.delete-btn {
+  color: #dc2626;
+  font-weight: bold;
+}

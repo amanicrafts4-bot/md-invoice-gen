@@ -15,17 +15,25 @@ type Row = {
   rate: number
 }
 
+type Props = {
+  rows: Row[]
+  total: number
+  clientName?: string
+  clientEmail?: string
+  clientPhone?: string
+  invoiceDate?: string
+  refNumber?: string
+}
+
 export default function InvoicePDF({
   rows,
   total,
+  clientName = '',
+  clientEmail = '',
+  clientPhone = '',
   invoiceDate = new Date().toLocaleDateString(),
   refNumber = `MD-${Date.now()}`,
-}: {
-  rows: Row[]
-  total: number
-  invoiceDate?: string
-  refNumber?: string
-}) {
+}: Props) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -34,49 +42,54 @@ export default function InvoicePDF({
           <Image src="/md-travels-logo.png" style={styles.logo} />
 
           <View style={styles.headerRight}>
-            <Text>44 Wrench Street,</Text>
+            <Text>44 Wrench Street</Text>
             <Text>Parow West</Text>
             <Text>Cape Town</Text>
             <Text>7500</Text>
             <Text>Email: info@mdtravel.co.za</Text>
-            <Text>24 hours: 060 641 1703</Text>
-            <Text>Alternative: 071 945 5941</Text>
+            <Text>24 Hours: 060 641 1703</Text>
+            <Text>Alt: 071 945 5941</Text>
           </View>
         </View>
 
-        {/* TITLE + DATE */}
+        {/* TITLE + META */}
         <View style={styles.titleRow}>
           <Text style={styles.invoiceTitle}>INVOICE</Text>
-          <View style={styles.dateBox}>
+
+          <View style={styles.metaRight}>
             <Text>DATE: {invoiceDate}</Text>
             <Text>REF NO: {refNumber}</Text>
           </View>
         </View>
 
-        {/* META + BANKING */}
+        {/* CLIENT + BANKING */}
         <View style={styles.metaSection}>
-          {/* LEFT */}
-          <View>
-            <Text>Attention:</Text>
-            <Text style={styles.spacer} />
-            <Text>1 × 14 Seater luxury Toyota Quantum.</Text>
+          {/* CLIENT */}
+          <View style={styles.clientBox}>
+            <Text style={styles.bold}>Attention:</Text>
+            {clientName && <Text>{clientName}</Text>}
+            {clientEmail && <Text>{clientEmail}</Text>}
+            {clientPhone && <Text>{clientPhone}</Text>}
+
+            <View style={styles.spacer} />
+
+            <Text>1 × 14 Seater luxury Toyota Quantum</Text>
             <Text>1 × Professional driver with PDP</Text>
           </View>
 
-          {/* RIGHT — BANKING DETAILS */}
+          {/* BANKING */}
           <View style={styles.bankBox}>
-            <Text style={styles.bold}>Banking details</Text>
+            <Text style={styles.bold}>Banking Details</Text>
             <Text>Bank Name: DLUNGE TRANSPORT SERVICE</Text>
             <Text>Branch Name: FNB POP BRANCH</Text>
             <Text>DELOTTERY</Text>
             <Text>Swift Code: FIRNZAJJ</Text>
-            <Text>Bank Type: GOLD BUSINESS</Text>
-            <Text>Bank acc no: 62828522294</Text>
-            <Text>Branch code: 203209</Text>
+            <Text>Account Type: GOLD BUSINESS</Text>
+            <Text>Account No: 62828522294</Text>
+            <Text>Branch Code: 203209</Text>
           </View>
         </View>
 
-        {/* THANK YOU */}
         <Text style={styles.thankYou}>THANK YOU FOR YOUR BOOKING</Text>
 
         {/* TABLE */}
@@ -84,7 +97,7 @@ export default function InvoicePDF({
           <View style={styles.trHeader}>
             <Text style={styles.th}>DATE</Text>
             <Text style={styles.th}>NO</Text>
-            <Text style={styles.th}>VEHICLE TYPE</Text>
+            <Text style={styles.th}>VEHICLE</Text>
             <Text style={styles.th}>DESTINATION</Text>
             <Text style={styles.thRight}>RATE</Text>
           </View>
@@ -115,14 +128,15 @@ export default function InvoicePDF({
         <View style={styles.terms}>
           <Text style={styles.bold}>TERMS & CONDITIONS:</Text>
           <Text>• Bookings are confirmed once payment or deposit is received.</Text>
-          <Text>• Payment is due before or on the day of travel unless otherwise agreed.</Text>
-          <Text>• Cancellations made less than 24 hours before travel may be charged.</Text>
-          <Text>• Airport pickups include a reasonable waiting time at no extra cost.</Text>
-          <Text>• All vehicles are fully insured and driven by licensed drivers.</Text>
+          <Text>• Payment is due before or on the day of travel unless agreed.</Text>
+          <Text>• Cancellations within 24 hours may be charged.</Text>
+          <Text>• Airport pickups include reasonable waiting time.</Text>
+          <Text>• Vehicles are fully insured and professionally driven.</Text>
           <Text>• Delays beyond our control cannot be guaranteed.</Text>
-          <Text>• Personal belongings remain the passenger’s responsibility.</Text>
-          <Text>• Additional stops may incur extra charges.</Text>
+          <Text>• Passenger belongings remain their responsibility.</Text>
+          <Text>• Route changes or extra stops may incur extra charges.</Text>
           <Text>• Acceptance of service confirms agreement to these terms.</Text>
+          <Text>• Services are governed by South African law.</Text>
         </View>
 
         {/* FOOTER */}
@@ -131,7 +145,7 @@ export default function InvoicePDF({
         <Text style={styles.signature}>
           Malipheze Dlunge{'\n'}
           Managing Director{'\n'}
-          0606411703
+          060 641 1703
         </Text>
       </Page>
     </Document>
@@ -155,35 +169,40 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   titleRow: {
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 10,
   },
   invoiceTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     letterSpacing: 2,
   },
-  dateBox: {
+  metaRight: {
     textAlign: 'right',
   },
   metaSection: {
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+  },
+  clientBox: {
+    width: '55%',
   },
   bankBox: {
+    width: '40%',
     borderWidth: 1,
     padding: 6,
-    width: 230,
   },
   thankYou: {
+    marginTop: 6,
+    marginBottom: 6,
     textAlign: 'center',
     color: 'red',
-    marginBottom: 6,
   },
   table: {
     borderWidth: 1,
+    marginTop: 6,
   },
   trHeader: {
     flexDirection: 'row',
@@ -216,9 +235,9 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   totalRow: {
+    padding: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 6,
   },
   vatText: {
     fontWeight: 'bold',
@@ -240,6 +259,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   spacer: {
-    marginVertical: 4,
+    marginVertical: 6,
   },
 })

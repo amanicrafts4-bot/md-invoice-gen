@@ -147,6 +147,7 @@ export default function InvoicePDF({
           Managing Director{'\n'}
           060 641 1703
         </Text>
+         <Image src="/signature.jpg" style={styles.logo} />
       </Page>
     </Document>
   )
